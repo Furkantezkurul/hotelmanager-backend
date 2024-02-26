@@ -4,13 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +22,7 @@ public class HotelzimmerController {
 
     @GetMapping("/{zimmerNummer}")
     public ResponseEntity<Optional<Hotelzimmer>> getSingleHotelzimmer(@PathVariable String zimmerNummer){
+        System.out.println("Get single Hotelzimmer with number:" + zimmerNummer);
         return new ResponseEntity<Optional<Hotelzimmer>>(hotelzimmerService.singleHotelzimmer(zimmerNummer), HttpStatus.OK);
     }
 
@@ -36,4 +31,22 @@ public class HotelzimmerController {
     public ResponseEntity<?> addHotelzimmer(@RequestBody Hotelzimmer newHotelzimmer) {
         return hotelzimmerService.addHotelzimmer(newHotelzimmer);
     }
+
+    @PutMapping("/{zimmerNummer}")
+    public ResponseEntity<?> updateHotelzimmer(@PathVariable String zimmerNummer, @RequestBody Hotelzimmer updatedHotelzimmer) {
+        return hotelzimmerService.updateHotelzimmer(zimmerNummer, updatedHotelzimmer);
+    }
+
+    @DeleteMapping("/{zimmerNummer}")
+    public ResponseEntity<?> deleteHotelzimmer(@PathVariable String zimmerNummer) {
+        boolean deleted = hotelzimmerService.deleteHotelzimmer(zimmerNummer);
+        if (deleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 }

@@ -37,4 +37,33 @@ public class HotelzimmerService {
         Hotelzimmer savedHotelzimmer = hotelzimmerRepository.save(newHotelzimmer);
         return ResponseEntity.ok(savedHotelzimmer);
     }
+
+    public ResponseEntity<?> updateHotelzimmer(String zimmerNummer, Hotelzimmer updatedHotelzimmer) {
+        Optional<Hotelzimmer> hotelzimmerOptional = hotelzimmerRepository.findHotelzimmerByZimmerNummer(zimmerNummer);
+        if (hotelzimmerOptional.isPresent()) {
+            Hotelzimmer existingHotelzimmer = hotelzimmerOptional.get();
+            // Update the attributes
+            existingHotelzimmer.setZimmerGroesse(updatedHotelzimmer.getZimmerGroesse());
+            existingHotelzimmer.setMinibar(updatedHotelzimmer.isMinibar());
+            existingHotelzimmer.setBesetzt(updatedHotelzimmer.isBesetzt());
+            // Save the updated hotel room
+            hotelzimmerRepository.save(existingHotelzimmer);
+            return ResponseEntity.ok(existingHotelzimmer);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    public boolean deleteHotelzimmer(String zimmerNummer) {
+        Optional<Hotelzimmer> hotelzimmerOptional = hotelzimmerRepository.findHotelzimmerByZimmerNummer(zimmerNummer);
+        if (hotelzimmerOptional.isPresent()) {
+            hotelzimmerRepository.delete(hotelzimmerOptional.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 }
