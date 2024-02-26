@@ -17,5 +17,6 @@ public class Hotelzimmer {
     private String zimmerNummer;
     private String zimmerGroesse;
     private boolean minibar;
+    private boolean besetzt;
 
 }
