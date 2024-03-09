@@ -21,8 +21,9 @@ public class HotelzimmerService {
         return hotelzimmerRepository.findHotelzimmerByZimmerNummer(zimmerNummer);
     }
 
+    // Adds a new Hotelzimmer to the Repository, if the Zimmernummer is valid and doesn't already exist
     public ResponseEntity<?> addHotelzimmer(Hotelzimmer newHotelzimmer) {
-        // Validate the zimmerNummer
+        // Check if Zimmernummer is number
         if (!newHotelzimmer.getZimmerNummer().matches("\\d+")) {
             return ResponseEntity.badRequest().body("Zimmernummer must be a number");
         }
@@ -38,6 +39,12 @@ public class HotelzimmerService {
         return ResponseEntity.ok(savedHotelzimmer);
     }
 
+    /**
+     * Updates the attributes of the Hotelzimmer with zimmerNummer
+     *
+     * @param zimmerNummer The number of the hotel room that should be edited
+     * @param updatedHotelzimmer Hotelzimmer with the new atttributes
+     */
     public ResponseEntity<?> updateHotelzimmer(String zimmerNummer, Hotelzimmer updatedHotelzimmer) {
         Optional<Hotelzimmer> hotelzimmerOptional = hotelzimmerRepository.findHotelzimmerByZimmerNummer(zimmerNummer);
         if (hotelzimmerOptional.isPresent()) {
@@ -54,6 +61,7 @@ public class HotelzimmerService {
         }
     }
 
+    // Deletes the Hotelzimmer from Repository with the corresponding zimmerNummer
     public boolean deleteHotelzimmer(String zimmerNummer) {
         Optional<Hotelzimmer> hotelzimmerOptional = hotelzimmerRepository.findHotelzimmerByZimmerNummer(zimmerNummer);
         if (hotelzimmerOptional.isPresent()) {
@@ -63,7 +71,4 @@ public class HotelzimmerService {
             return false;
         }
     }
-
-
-
 }

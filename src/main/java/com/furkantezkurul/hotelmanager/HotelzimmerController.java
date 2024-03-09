@@ -22,7 +22,6 @@ public class HotelzimmerController {
 
     @GetMapping("/{zimmerNummer}")
     public ResponseEntity<Optional<Hotelzimmer>> getSingleHotelzimmer(@PathVariable String zimmerNummer){
-        System.out.println("Get single Hotelzimmer with number:" + zimmerNummer);
         return new ResponseEntity<Optional<Hotelzimmer>>(hotelzimmerService.singleHotelzimmer(zimmerNummer), HttpStatus.OK);
     }
 
